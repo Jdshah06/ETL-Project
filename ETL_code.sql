@@ -3,10 +3,8 @@ DROP TABLE confirmed;
 DROP TABLE population;
 
 CREATE TABLE airport (
-	airport_name VARCHAR,
 	state VARCHAR,
-	passenger_count INT,
-	year INT
+	passenger_count INT
 );
 
 CREATE TABLE confirmed (
@@ -26,21 +24,14 @@ SELECT * FROM airport;
 SELECT * FROM confirmed;
 SELECT * FROM population;
 
-/* This is the code that works*/
-SELECT p.state, p.population, c.deaths, c.confirmed, p.population_density
+SELECT p.state, p.population, c.deaths, c.confirmed, p.population_density, a.passenger_count
 FROM population AS p
 JOIN confirmed AS c
 ON p.state = c.state
-ORDER BY state ASC;
+LEFT JOIN airport AS a
+ON p.state = a.state;
 
-/*This is the code that does not work as there are more than 1 of the same state in df airport*/
-SELECT p.state, p.population, c.deaths, c.confirmed, p.population_density, a.airport, a.passenger_count
-FROM population AS p
-JOIN confirmed AS c
-ON p.state = c.state
-JOIN airport AS a
-ON p.state = a.state
-ORDER BY state ASC;
+
 
 
 
